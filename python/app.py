@@ -53,8 +53,6 @@ def insertNewComment(id):
 
     new_comm = [new_comm]
 
-    print("sono qua")
-
     #  Assign the predicted sentiment
     x_test_counts = count_vect_model.transform(new_comm)
     x_test_tfidf = tfidf_model.transform(x_test_counts)
@@ -62,7 +60,7 @@ def insertNewComment(id):
 
     print("The predicted sentiment of your comment is: " + predicted[0])
 
-    new_row = {'ReviewId': new_id, 'RecipeId': id, 'AuthorId': aut_id, 'AuthorName': aut_name, 'Rating': predicted[0],
+    new_row = {'ReviewId': new_id, 'RecipeId': int(id), 'AuthorId': aut_id, 'AuthorName': aut_name, 'Rating': predicted[0],
                'Review': new_comm[0], 'DateSubmitted': date, 'DateModified': date}
 
     #  Modify dataframe to memorize the new comment
