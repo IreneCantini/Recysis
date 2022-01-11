@@ -70,7 +70,7 @@ def insertNewComment(id):
 
     #  Modify the csv File for a permanent modification
     headersCSV = ['ReviewId', 'RecipeId', 'AuthorId', 'AuthorName', 'Rating', 'Review', 'DateSubmitted', 'DateModified']
-    with open('../dataset/review_6.csv', 'a', newline='') as f_object:
+    with open('../dataset/review6.csv', 'a', newline='') as f_object:
         dictwriter_object = DictWriter(f_object, fieldnames=headersCSV)
         dictwriter_object.writerow(new_row)
         f_object.close()
