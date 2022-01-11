@@ -14,11 +14,12 @@ from sklearn import metrics
 import matplotlib.pyplot as plt
 from nltk.stem.snowball import EnglishStemmer
 
-df=pd.read_csv("../dataset/training_set_piccolo_weka (3).csv")
+df=pd.read_csv("../dataset/dataset_2008.csv")
 
 
 def stemming(doc):
     return (stemmer.stem(w) for w in analyzer(doc))
+
 
 stemmer = EnglishStemmer()
 analyzer = CountVectorizer().build_analyzer()

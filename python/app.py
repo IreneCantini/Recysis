@@ -28,9 +28,9 @@ review = pd.merge(review12345, review6, how='outer')
 users = pd.read_csv("../dataset/UserId_Password.csv")
 
 #  save model to text mining
-count_vect_model = pickle.load(open('../model/count_vect.sav', 'rb'))
-tfidf_model = pickle.load(open('../model/tfidf_model.sav', 'rb'))
-loaded_model = pickle.load(open("../model/static_model.sav", 'rb'))
+count_vect_model = pickle.load(open('../models/count_vect.sav', 'rb'))
+tfidf_model = pickle.load(open('../models/tfidf_model.sav', 'rb'))
+loaded_model = pickle.load(open("../models/static_model.sav", 'rb'))
 
 aut_id = 0
 aut_name = ""
@@ -52,6 +52,8 @@ def insertNewComment(id):
     date = datetime.today().strftime('%Y-%m-%d')
 
     new_comm = [new_comm]
+
+    print("sono qua")
 
     #  Assign the predicted sentiment
     x_test_counts = count_vect_model.transform(new_comm)
