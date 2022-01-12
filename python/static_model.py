@@ -9,6 +9,7 @@ from nltk.stem.snowball import EnglishStemmer
 from sklearn import metrics
 from sklearn.metrics import ConfusionMatrixDisplay
 
+
 df=pd.read_csv("../dataset/dataset_2008.csv")
 df1=pd.read_csv("../dataset/evento1.csv")
 df2=pd.read_csv("../dataset/evento2.csv")
@@ -17,8 +18,10 @@ df4=pd.read_csv("../dataset/evento4.csv")
 df5=pd.read_csv("../dataset/evento5.csv")
 df6=pd.read_csv("../dataset/evento6.csv")
 
+
 def stemming(doc):
     return (stemmer.stem(w) for w in analyzer(doc))
+
 
 def static_model(classifier,number_event):
     event_dataset=globals()["df" + str(number_event)]
