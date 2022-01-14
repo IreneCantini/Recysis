@@ -3,6 +3,8 @@ from datetime import datetime
 from termcolor import colored
 import pandas as pd
 import dill as pickle
+from sklearn.feature_extraction.text import CountVectorizer
+from nltk.stem.snowball import EnglishStemmer
 pd.options.mode.chained_assignment = None
 
 # save dataset
@@ -31,6 +33,9 @@ users = pd.read_csv("../dataset/UserId_Password.csv")
 count_vect_model = pickle.load(open('../models/count_vect.sav', 'rb'))
 tfidf_model = pickle.load(open('../models/tfidf_model.sav', 'rb'))
 loaded_model = pickle.load(open("../models/static_model.sav", 'rb'))
+
+stemmer=EnglishStemmer()
+analyzer=CountVectorizer().build_analyzer()
 
 aut_id = 0
 aut_name = ""
