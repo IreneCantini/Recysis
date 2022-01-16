@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn import svm
-from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -9,22 +8,21 @@ from nltk.stem.snowball import EnglishStemmer
 from sklearn import metrics
 from sklearn.metrics import ConfusionMatrixDisplay
 
-
-df=pd.read_csv("../dataset/dataset_2008.csv")
-df1=pd.read_csv("../dataset/evento1.csv")
-df2=pd.read_csv("../dataset/evento2.csv")
-df3=pd.read_csv("../dataset/evento3.csv")
-df4=pd.read_csv("../dataset/evento4.csv")
-df5=pd.read_csv("../dataset/evento5.csv")
-df6=pd.read_csv("../dataset/evento6.csv")
+df = pd.read_csv("../dataset/dataset_2008.csv")
+df1 = pd.read_csv("../dataset/evento1.csv")
+df2 = pd.read_csv("../dataset/evento2.csv")
+df3 = pd.read_csv("../dataset/evento3.csv")
+df4 = pd.read_csv("../dataset/evento4.csv")
+df5 = pd.read_csv("../dataset/evento5.csv")
+df6 = pd.read_csv("../dataset/evento6.csv")
 
 
 def stemming(doc):
     return (stemmer.stem(w) for w in analyzer(doc))
 
 
-def static_model(classifier,number_event):
-    event_dataset=globals()["df" + str(number_event)]
+def static_model(classifier, number_event):
+    event_dataset = globals()["df" + str(number_event)]
     X_test = event_dataset['Review'].values
     y_test = event_dataset['Rating'].values
 
@@ -35,7 +33,7 @@ def static_model(classifier,number_event):
     print(metrics.classification_report(y_test, predicted))
     ConfusionMatrixDisplay.from_predictions(y_test, predicted)
     plt.title("STATIC MODEL")
-    plt.savefig("../images/ConfusionMatrix_Ev" + str(number_event) + "_static.png")
+    plt.show()
     return accuracy_score(y_test, predicted)
 
 
@@ -50,7 +48,6 @@ if __name__ == '__main__':
     X_initial_train = df['Review'].values
     y_initial_train = df['Rating'].values
     static_accuracies = []
-    incremental_accuracies = []
     static_dictionary_size = []
 
     # Text preprocessing, tokenizing and filtering of stopwords
@@ -67,10 +64,6 @@ if __name__ == '__main__':
 
         string_dataset = "df" + str(i + 1)
         event_dataset = globals()[string_dataset]
-        static_accuracies.append(static_model(classifier,i+1))
+        static_accuracies.append(static_model(classifier, i + 1))
     print("static accuracies: ", static_accuracies)
     print("static dictionary size: ", static_dictionary_size)
-
-
-
-
