@@ -53,7 +53,7 @@ while number_event <= 6:
     current_event_dataset = globals()["df" + str(number_event)]
 
     # building the training set with 60 new comments from the previous event
-    # and removing 60 oldest comments
+
     if number_event > 1:
         print("number event: ", number_event)
         previous_event_dataset_string = "df" + str(number_event - 1)

@@ -17,10 +17,6 @@ df5 = pd.read_csv("../dataset/evento5.csv")
 df6 = pd.read_csv("../dataset/evento6.csv")
 
 
-def stemming(doc):
-    return (stemmer.stem(w) for w in analyzer(doc))
-
-
 def static_model(classifier, number_event):
     event_dataset = globals()["df" + str(number_event)]
     X_test = event_dataset['Review'].values
@@ -37,18 +33,23 @@ def static_model(classifier, number_event):
     return accuracy_score(y_test, predicted)
 
 
+def stemming(doc):
+    return (stemmer.stem(w) for w in analyzer(doc))
+
+
 if __name__ == '__main__':
     classifier = svm.LinearSVC(C=0.1)
+    X_initial_train = df['Review'].values
+    y_initial_train = df['Rating'].values
+
+    static_accuracies = []
+    static_dictionary_size = []
+
     stemmer = EnglishStemmer()
     analyzer = CountVectorizer().build_analyzer()
     count_vect = CountVectorizer(stop_words='english', strip_accents='ascii', lowercase=True,
                                  token_pattern=r"(?u)\b[^\d\W][^\d\W]+\b", analyzer=stemming)
     tfidf_transformer = TfidfTransformer()
-
-    X_initial_train = df['Review'].values
-    y_initial_train = df['Rating'].values
-    static_accuracies = []
-    static_dictionary_size = []
 
     # Text preprocessing, tokenizing and filtering of stopwords
     X_initial_train_counts = count_vect.fit_transform(X_initial_train)
@@ -56,9 +57,10 @@ if __name__ == '__main__':
     # From occurrences to frequencies
     X_initial_train_tfidf = tfidf_transformer.fit_transform(X_initial_train_counts)
 
+    # Training classifier with initial training set
+    classifier.fit(X_initial_train_tfidf, y_initial_train)
+
     for i in range(6):
-        # Training classifier with initial training set
-        classifier.fit(X_initial_train_tfidf, y_initial_train)
         static_dictionary_size.append(len(count_vect.vocabulary_))
         print("event ", i + 1)
 
